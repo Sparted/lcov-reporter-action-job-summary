@@ -60,7 +60,7 @@ async function main() {
 
 	const lcov = await parse(raw)
 	const baselcov = baseRaw && (await parse(baseRaw))
-	const body = diff(lcov, baselcov, options).substring(0, MAX_COMMENT_CHARS)
+	const body = diff(lcov, baselcov, options)
 
 	// if (shouldDeleteOldComments) {
 	// 	await deleteOldComments(githubClient, options, context)
