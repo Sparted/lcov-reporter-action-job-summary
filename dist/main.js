@@ -25415,8 +25415,6 @@ async function getChangedFiles(githubClient, options, context) {
 		.map(file => file.filename)
 }
 
-const MAX_COMMENT_CHARS = 65536;
-
 async function main$1() {
 	const token = core$1.getInput("github-token");
 	const githubClient = new github_2(token);
@@ -25467,7 +25465,7 @@ async function main$1() {
 
 	const lcov = await parse$2(raw);
 	const baselcov = baseRaw && (await parse$2(baseRaw));
-	const body = diff(lcov, baselcov, options).substring(0, MAX_COMMENT_CHARS);
+	const body = diff(lcov, baselcov, options);
 
 	// if (shouldDeleteOldComments) {
 	// 	await deleteOldComments(githubClient, options, context)
