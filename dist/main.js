@@ -25153,7 +25153,7 @@ const fragment = function(...children) {
 };
 
 const markdownLink = function(text, link) {
-	return `\n\n[${text}](${link})\n`
+	return `\n\n[${text}](${link})`
 };
 
 function normalisePath(file) {
