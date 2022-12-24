@@ -25263,7 +25263,7 @@ function filename(file, indent, options) {
 	// const space = indent ? "&nbsp; &nbsp;" : ""
 	const space = "";
 	// return fragment(space, a({ href }, filename))
-	return fragment(space, markdownLink({href}, filename))
+	return fragment(space, markdownLink({href, isEmbedInHtml: true}, filename))
 }
 
 function percentage$1(item) {
@@ -25302,7 +25302,7 @@ function uncovered(file, options) {
 					? range.start
 					: `${range.start}–${range.end}`;
 
-			return markdownLink({href: `${href}#${fragment}`, isEmbedInHtml: true}, text)
+			return markdownLink({href: `${href}#${fragment}`, isEmbedInHtml: false}, text)
 		})
 		.join(", ")
 }
