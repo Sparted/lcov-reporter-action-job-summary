@@ -8,7 +8,7 @@ import { diff } from "./comment"
 import { getChangedFiles } from "./get_changes"
 import { normalisePath } from "./util"
 
-const MAX_SUMMARY_CHARS = 1048576
+const MAX_SUMMARY_CHARS = 1047000
 
 async function main() {
 	const token = core.getInput("github-token")
@@ -60,7 +60,15 @@ async function main() {
 
 	const lcov = await parse(raw)
 	const baselcov = baseRaw && (await parse(baseRaw))
-	const body = diff(lcov, baselcov, options).substring(0, MAX_SUMMARY_CHARS)
+	const body = diff(lcov, baselcov, options)
+
+	const summary = body.substring(0, MAX_SUMMARY_CHARS)
+
+
+	const diffSize = body.length - summary.length
+	if(diffSize > 0) {
+		console.warn(`Final summary is ${diffSize} longer then a max github summary limit(1MiB)`)
+	}
 
 	// if (shouldDeleteOldComments) {
 	// 	await deleteOldComments(githubClient, options, context)

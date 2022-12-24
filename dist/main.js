@@ -25421,7 +25421,7 @@ async function getChangedFiles(githubClient, options, context) {
 		.map(file => file.filename)
 }
 
-const MAX_SUMMARY_CHARS = 1048576;
+const MAX_SUMMARY_CHARS = 1047000;
 
 async function main$1() {
 	const token = core$1.getInput("github-token");
@@ -25473,7 +25473,15 @@ async function main$1() {
 
 	const lcov = await parse$2(raw);
 	const baselcov = baseRaw && (await parse$2(baseRaw));
-	const body = diff(lcov, baselcov, options).substring(0, MAX_SUMMARY_CHARS);
+	const body = diff(lcov, baselcov, options);
+
+	const summary = body.substring(0, MAX_SUMMARY_CHARS);
+
+
+	const diffSize = body.length - summary.length;
+	if(diffSize > 0) {
+		console.warn(`Final summary is ${diffSize} longer then a max github summary limit(1MiB)`);
+	}
 
 	// if (shouldDeleteOldComments) {
 	// 	await deleteOldComments(githubClient, options, context)
