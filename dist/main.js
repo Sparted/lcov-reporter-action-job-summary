@@ -25153,6 +25153,10 @@ const fragment = function(...children) {
 	return children.join("")
 };
 
+const markdownLink = function(text, link) {
+	return `\n[${text}](${link})\n`
+};
+
 function normalisePath(file) {
 	return file.replace(/\\/g, "/")
 }
@@ -25258,7 +25262,8 @@ function filename(file, indent, options) {
 	const {href, filename} = createHref(options, file);
 	// const space = indent ? "&nbsp; &nbsp;" : ""
 	const space = "";
-	return fragment(space, a({ href }, filename))
+	// return fragment(space, a({ href }, filename))
+	return fragment(space, markdownLink(filename, href))
 }
 
 function percentage$1(item) {
@@ -25416,6 +25421,8 @@ async function getChangedFiles(githubClient, options, context) {
 		.map(file => file.filename)
 }
 
+const MAX_SUMMARY_CHARS = 1048576;
+
 async function main$1() {
 	const token = core$1.getInput("github-token");
 	const githubClient = new github_2(token);
@@ -25466,7 +25473,7 @@ async function main$1() {
 
 	const lcov = await parse$2(raw);
 	const baselcov = baseRaw && (await parse$2(baseRaw));
-	const body = diff(lcov, baselcov, options);
+	const body = diff(lcov, baselcov, options).substring(0, MAX_SUMMARY_CHARS);
 
 	// if (shouldDeleteOldComments) {
 	// 	await deleteOldComments(githubClient, options, context)

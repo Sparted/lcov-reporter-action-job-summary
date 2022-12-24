@@ -28,3 +28,7 @@ export const h2 = tag("h2")
 export const fragment = function(...children) {
 	return children.join("")
 }
+
+export const markdownLink = function(text, link) {
+	return `\n[${text}](${link})\n`
+}

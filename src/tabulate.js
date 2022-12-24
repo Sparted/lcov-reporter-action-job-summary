@@ -1,4 +1,4 @@
-import { th, tr, td, table, tbody, a, b, span, fragment } from "./html"
+import { th, tr, td, table, tbody, a, b, span, fragment, markdownLink } from "./html"
 import { createHref, normalisePath } from "./util"
 
 // Tabulate the lcov data in a HTML table.
@@ -91,7 +91,8 @@ function filename(file, indent, options) {
 	const {href, filename} = createHref(options, file);
 	// const space = indent ? "&nbsp; &nbsp;" : ""
 	const space = "";
-	return fragment(space, a({ href }, filename))
+	// return fragment(space, a({ href }, filename))
+	return fragment(space, markdownLink(filename, href))
 }
 
 function percentage(item) {
