@@ -15,7 +15,7 @@ test('create simple url to file', () => {
     },
   }
   expect(createHref(options, file)).toEqual({
-    href: `https://github.com/${options.repository}/blob/${options.commit}/index.js`,
+    href: `/${options.repository}/blob/${options.commit}/index.js`,
     filename: 'index.js'
   })
 })
@@ -37,7 +37,7 @@ describe('has working directory', () => {
       },
     }
     expect(createHref(options, file)).toEqual({
-      href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/index.js`,
+      href: `/${options.repository}/blob/${options.commit}/frontend/index.js`,
       filename: 'index.js'
     })
   })
@@ -58,7 +58,7 @@ describe('has working directory', () => {
       },
     }
     expect(createHref(options, file)).toEqual({
-      href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/index.js`,
+      href: `/${options.repository}/blob/${options.commit}/frontend/index.js`,
       filename: 'index.js'
     })
   })
@@ -79,7 +79,7 @@ describe('has working directory', () => {
       },
     }
     expect(createHref(options, file)).toEqual({
-      href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/foo.js`,
+      href: `/${options.repository}/blob/${options.commit}/frontend/src/foo.js`,
       filename: 'foo.js'
     })
   })

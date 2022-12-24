@@ -89,7 +89,8 @@ function toRow(file, indent, options) {
 
 function filename(file, indent, options) {
 	const {href, filename} = createHref(options, file);
-	const space = indent ? "&nbsp; &nbsp;" : ""
+	// const space = indent ? "&nbsp; &nbsp;" : ""
+	const space = "";
 	return fragment(space, a({ href }, filename))
 }
 
@@ -127,7 +128,7 @@ function uncovered(file, options) {
 			const text =
 				range.start === range.end
 					? range.start
-					: `${range.start}&ndash;${range.end}`
+					: `${range.start}–${range.end}`
 
 			return a({ href: `${href}#${fragment}` }, text)
 		})

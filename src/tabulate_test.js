@@ -136,7 +136,7 @@ test("tabulate should generate a correct table", function() {
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/index.js`,
+							href: `/${options.repository}/blob/${options.commit}/frontend/index.js`,
 						},
 						"index.js",
 					),
@@ -150,10 +150,10 @@ test("tabulate should generate a correct table", function() {
 			tr(td({ colspan: 6 }, b("src"))),
 			tr(
 				td(
-					"&nbsp; &nbsp;",
+					"",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/foo.js`,
+							href: `/${options.repository}/blob/${options.commit}/frontend/src/foo.js`,
 						},
 						"foo.js",
 					),
@@ -165,7 +165,7 @@ test("tabulate should generate a correct table", function() {
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/foo.js#L37`,
+							href: `/${options.repository}/blob/${options.commit}/frontend/src/foo.js#L37`,
 						},
 						37,
 					),
@@ -174,10 +174,10 @@ test("tabulate should generate a correct table", function() {
 			tr(td({ colspan: 6 }, b("src/bar"))),
 			tr(
 				td(
-					"&nbsp; &nbsp;",
+					"",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js`,
+							href: `/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js`,
 						},
 						"baz.js",
 					),
@@ -189,14 +189,14 @@ test("tabulate should generate a correct table", function() {
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js#L20-L21`,
+							href: `/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js#L20-L21`,
 						},
-						"20&ndash;21",
+						"20–21",
 					),
 					", ",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js#L27`,
+							href: `/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js#L27`,
 						},
 						"27",
 					),
@@ -342,10 +342,10 @@ test("filtered tabulate should generate a correct table with only changed files"
 			tr(td({ colspan: 6 }, b("src"))),
 			tr(
 				td(
-					"&nbsp; &nbsp;",
+					"",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/foo.js`,
+							href: `/${options.repository}/blob/${options.commit}/src/foo.js`,
 						},
 						"foo.js",
 					),
@@ -357,7 +357,7 @@ test("filtered tabulate should generate a correct table with only changed files"
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/foo.js#L37`,
+							href: `/${options.repository}/blob/${options.commit}/src/foo.js#L37`,
 						},
 						37,
 					),
@@ -503,10 +503,10 @@ test("filtered tabulate should fix backwards slashes in filenames", function() {
 			tr(td({ colspan: 6 }, b("src"))),
 			tr(
 				td(
-					"&nbsp; &nbsp;",
+					"",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/foo.js`,
+							href: `/${options.repository}/blob/${options.commit}/src/foo.js`,
 						},
 						"foo.js",
 					),
@@ -518,7 +518,7 @@ test("filtered tabulate should fix backwards slashes in filenames", function() {
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/foo.js#L37`,
+							href: `/${options.repository}/blob/${options.commit}/src/foo.js#L37`,
 						},
 						37,
 					),

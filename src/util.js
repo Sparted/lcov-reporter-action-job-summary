@@ -10,7 +10,7 @@ export function createHref(options, file) {
 	const filename = parts[parts.length - 1]
 	const url = path.join(options.repository, 'blob', options.commit, options.workingDir || './', relative)
 	return {
-		href: `https://github.com/${url}`,
+		href: `/${url}`,
 		filename
 	};
 }
