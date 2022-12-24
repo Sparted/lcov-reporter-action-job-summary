@@ -25146,7 +25146,6 @@ const th = tag("th");
 const b = tag("b");
 const table = tag("table");
 const tbody = tag("tbody");
-const a = tag("a");
 const h2 = tag("h2");
 
 const fragment = function(...children) {
@@ -25154,7 +25153,7 @@ const fragment = function(...children) {
 };
 
 const markdownLink = function(text, link) {
-	return `\n[${text}](${link})\n`
+	return `\n\n[${text}](${link})\n`
 };
 
 function normalisePath(file) {
@@ -25302,7 +25301,7 @@ function uncovered(file, options) {
 					? range.start
 					: `${range.start}–${range.end}`;
 
-			return a({ href: `${href}#${fragment}` }, text)
+			return markdownLink(text, `${href}#${fragment}`)
 		})
 		.join(", ")
 }

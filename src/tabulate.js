@@ -131,7 +131,7 @@ function uncovered(file, options) {
 					? range.start
 					: `${range.start}–${range.end}`
 
-			return a({ href: `${href}#${fragment}` }, text)
+			return markdownLink(text, `${href}#${fragment}`)
 		})
 		.join(", ")
 }

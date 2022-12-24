@@ -30,5 +30,5 @@ export const fragment = function(...children) {
 }
 
 export const markdownLink = function(text, link) {
-	return `\n[${text}](${link})\n`
+	return `\n\n[${text}](${link})\n`
 }
