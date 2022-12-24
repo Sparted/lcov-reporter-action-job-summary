@@ -89,7 +89,7 @@ async function main() {
 	// 		body: body,
 	// 	})
 	// }
-  await core.summary.addRaw(body).write()
+  await core.summary.addRaw(summary).write()
 }
 
 main().catch(function(err) {

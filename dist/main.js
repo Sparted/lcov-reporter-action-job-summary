@@ -25502,7 +25502,7 @@ async function main$1() {
 	// 		body: body,
 	// 	})
 	// }
-  await core$1.summary.addRaw(body).write();
+  await core$1.summary.addRaw(summary).write();
 }
 
 main$1().catch(function(err) {
