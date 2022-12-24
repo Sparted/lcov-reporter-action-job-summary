@@ -25152,8 +25152,9 @@ const fragment = function(...children) {
 	return children.join("")
 };
 
-const markdownLink = function(text, link) {
-	return `\n\n[${text}](${link})`
+const markdownLink = function({href, isEmbedInHtml = false}, text) {
+	const htmlSafeNewline = isEmbedInHtml ? '\n' : '';
+	return `${htmlSafeNewline}\n[${text}](${href})`
 };
 
 function normalisePath(file) {
@@ -25262,7 +25263,7 @@ function filename(file, indent, options) {
 	// const space = indent ? "&nbsp; &nbsp;" : ""
 	const space = "";
 	// return fragment(space, a({ href }, filename))
-	return fragment(space, markdownLink(filename, href))
+	return fragment(space, markdownLink({href}, filename))
 }
 
 function percentage$1(item) {
@@ -25301,7 +25302,7 @@ function uncovered(file, options) {
 					? range.start
 					: `${range.start}–${range.end}`;
 
-			return markdownLink(text, `${href}#${fragment}`)
+			return markdownLink({href: `${href}#${fragment}`, isEmbedInHtml: true}, text)
 		})
 		.join(", ")
 }

@@ -29,6 +29,7 @@ export const fragment = function(...children) {
 	return children.join("")
 }
 
-export const markdownLink = function(text, link) {
-	return `\n\n[${text}](${link})`
+export const markdownLink = function({href, isEmbedInHtml = false}, text) {
+	const htmlSafeNewline = isEmbedInHtml ? '\n' : ''
+	return `${htmlSafeNewline}\n[${text}](${href})`
 }

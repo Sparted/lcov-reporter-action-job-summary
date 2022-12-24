@@ -92,7 +92,7 @@ function filename(file, indent, options) {
 	// const space = indent ? "&nbsp; &nbsp;" : ""
 	const space = "";
 	// return fragment(space, a({ href }, filename))
-	return fragment(space, markdownLink(filename, href))
+	return fragment(space, markdownLink({href}, filename))
 }
 
 function percentage(item) {
@@ -131,7 +131,7 @@ function uncovered(file, options) {
 					? range.start
 					: `${range.start}–${range.end}`
 
-			return markdownLink(text, `${href}#${fragment}`)
+			return markdownLink({href: `${href}#${fragment}`, isEmbedInHtml: true}, text)
 		})
 		.join(", ")
 }
