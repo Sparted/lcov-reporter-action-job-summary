@@ -8,7 +8,7 @@ import { diff } from "./comment"
 import { getChangedFiles } from "./get_changes"
 import { normalisePath } from "./util"
 
-const MAX_SUMMARY_CHARS = 1047000
+const MAX_SUMMARY_CHARS = 1024000
 
 async function main() {
 	const token = core.getInput("github-token")

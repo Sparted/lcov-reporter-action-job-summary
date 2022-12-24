@@ -25421,7 +25421,7 @@ async function getChangedFiles(githubClient, options, context) {
 		.map(file => file.filename)
 }
 
-const MAX_SUMMARY_CHARS = 1047000;
+const MAX_SUMMARY_CHARS = 1024000;
 
 async function main$1() {
 	const token = core$1.getInput("github-token");
