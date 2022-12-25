@@ -11,16 +11,9 @@ export function comment(lcov, options) {
 					options.base,
 			  )} will be`
 			: `Coverage for this commit`,
-		table(tbody(tr(th(percentage(lcov).toFixed(2), "%")))),
+		table(tbody({ id: "coverage-tag" }, tr(th(percentage(lcov).toFixed(2), "%")))),
 		"\n\n",
-		details(
-			summary(
-				options.shouldFilterChangedFiles
-					? "Coverage Report for Changed Files"
-					: "Coverage Report",
-			),
-			tabulate(lcov, options),
-		),
+		tabulate(lcov, options),
 	)
 }
 
