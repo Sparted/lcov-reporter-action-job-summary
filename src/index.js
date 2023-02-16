@@ -16,10 +16,9 @@ async function main() {
 	const workingDir = core.getInput('working-directory') || './';	
 	const lcovFile = path.join(workingDir, core.getInput("lcov-file") || "./coverage/lcov.info")
 	const baseFile = core.getInput("lcov-base")
+	const prNumber = core.getInput("pr-number");
 	const shouldFilterChangedFiles =
 		core.getInput("filter-changed-files").toLowerCase() === "true"
-	// const shouldDeleteOldComments =
-	// 	core.getInput("delete-old-comments").toLowerCase() === "true"
 	const title = core.getInput("title")
 
 	const raw = await fs.readFile(lcovFile, "utf-8").catch(err => null)
@@ -40,19 +39,21 @@ async function main() {
 		workingDir,
 	}
 
-	if (context.eventName === "pull_request") {
-		options.commit = context.payload.pull_request.head.sha
-		options.baseCommit = context.payload.pull_request.base.sha
-		options.head = context.payload.pull_request.head.ref
-		options.base = context.payload.pull_request.base.ref
-	} else if (context.eventName === "push") {
-		options.commit = context.payload.after
-		options.baseCommit = context.payload.before
-		options.head = context.ref
-	}
+	const { data } = await githubClient.pulls.get({
+		owner: context.repo.owner,
+		repo: context.repo.repo,
+		pull_number: prNumber,
+	})
 
-	options.shouldFilterChangedFiles = shouldFilterChangedFiles
-	options.title = title
+	const options = {
+		repository: context.payload.repository.full_name,
+		baseCommit: data.base.sha
+		commit: data.head.sha,
+		head: data.head.ref,
+		base: data.base.ref,
+		title,
+		shouldFilterChangedFiles,
+	};
 
 	if (shouldFilterChangedFiles) {
 		options.changedFiles = await getChangedFiles(githubClient, options, context)
@@ -64,31 +65,14 @@ async function main() {
 
 	const summary = body.substring(0, MAX_SUMMARY_CHARS)
 
-
 	const diffSize = body.length - summary.length
+
 	if(diffSize > 0) {
 		console.warn(`Final summary is ${diffSize} longer then a max github summary limit(1MiB)`)
 	}
 
-	// if (shouldDeleteOldComments) {
-	// 	await deleteOldComments(githubClient, options, context)
-	// }
+	core.setOutput('comment', body || '');
 
-	// if (context.eventName === "pull_request") {
-	// 	await githubClient.issues.createComment({
-	// 		repo: context.repo.repo,
-	// 		owner: context.repo.owner,
-	// 		issue_number: context.payload.pull_request.number,
-	// 		body: body,
-	// 	})
-	// } else if (context.eventName === "push") {
-	// 	await githubClient.repos.createCommitComment({
-	// 		repo: context.repo.repo,
-	// 		owner: context.repo.owner,
-	// 		commit_sha: options.commit,
-	// 		body: body,
-	// 	})
-	// }
   await core.summary.addRaw(summary).write()
 }
 

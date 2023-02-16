@@ -9,6 +9,9 @@ inputs:
     description: Github token
     required: true
     default: ${{ github.token }}
+  pr-number:
+    description: Number of the Pull Request
+    required: true
   lcov-file:
     description: The location of the lcov.info file
     required: false
@@ -17,10 +20,6 @@ inputs:
     required: false
   filter-changed-files:
     description: Set to true to only comment with coverage on files changed in this commit
-    required: false
-    default: false
-  delete-old-comments:
-    description: Set to true to delete old Coverage Report comments
     required: false
     default: false
   working-directory:
