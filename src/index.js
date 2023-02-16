@@ -45,7 +45,7 @@ async function main() {
 		pull_number: prNumber,
 	})
 
-  await core.summary.addRaw(data).write()
+	core.info('Pulls data: ' + JSON.stringify(data));
 
 	options.baseCommit = data.base.sha;
 	options.commit = data.head.sha;
@@ -54,9 +54,13 @@ async function main() {
 	options.title = title;
 	options.shouldFilterChangedFiles = shouldFilterChangedFiles;
 
+	core.info('Options: ' + JSON.stringify(options));
+
 	if (shouldFilterChangedFiles) {
 		options.changedFiles = await getChangedFiles(githubClient, options, context)
 	}
+
+	core.info('changedFiles: ' + JSON.stringify(options.changedFiles));
 
 	const lcov = await parse(raw)
 	const baselcov = baseRaw && (await parse(baseRaw))
