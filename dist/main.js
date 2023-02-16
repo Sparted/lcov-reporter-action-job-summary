@@ -25474,8 +25474,7 @@ async function main$1() {
 
 	const summary = body.substring(0, MAX_SUMMARY_CHARS);
 
-	const diffSize = body.length - summary.length;
-
+	core$1.info('summary: ' + summary);
 	core$1.setOutput('comment', body || '');
 }
 

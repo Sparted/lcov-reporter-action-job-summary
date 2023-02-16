@@ -68,8 +68,7 @@ async function main() {
 
 	const summary = body.substring(0, MAX_SUMMARY_CHARS)
 
-	const diffSize = body.length - summary.length
-
+	core.info('summary: ' + summary);
 	core.setOutput('comment', body || '');
 }
 
