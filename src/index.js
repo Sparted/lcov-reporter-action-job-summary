@@ -45,15 +45,12 @@ async function main() {
 		pull_number: prNumber,
 	})
 
-	const options = {
-		repository: context.payload.repository.full_name,
-		baseCommit: data.base.sha
-		commit: data.head.sha,
-		head: data.head.ref,
-		base: data.base.ref,
-		title,
-		shouldFilterChangedFiles,
-	};
+	options.baseCommit = data.base.sh;
+	options.commit = data.head.sha;
+	options.head = data.head.ref;
+	options.base = data.base.ref;
+	options.title = title;
+	options.shouldFilterChangedFiles = shouldFilterChangedFiles;
 
 	if (shouldFilterChangedFiles) {
 		options.changedFiles = await getChangedFiles(githubClient, options, context)
