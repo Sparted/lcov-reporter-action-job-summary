@@ -45,7 +45,9 @@ async function main() {
 		pull_number: prNumber,
 	})
 
-	options.baseCommit = data.base.sh;
+  await core.summary.addRaw(data).write()
+
+	options.baseCommit = data.base.sha;
 	options.commit = data.head.sha;
 	options.head = data.head.ref;
 	options.base = data.base.ref;
@@ -64,13 +66,7 @@ async function main() {
 
 	const diffSize = body.length - summary.length
 
-	if(diffSize > 0) {
-		console.warn(`Final summary is ${diffSize} longer then a max github summary limit(1MiB)`)
-	}
-
 	core.setOutput('comment', body || '');
-
-  await core.summary.addRaw(summary).write()
 }
 
 main().catch(function(err) {

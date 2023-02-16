@@ -25451,7 +25451,9 @@ async function main$1() {
 		pull_number: prNumber,
 	});
 
-	options.baseCommit = data.base.sh;
+  await core$1.summary.addRaw(data).write();
+
+	options.baseCommit = data.base.sha;
 	options.commit = data.head.sha;
 	options.head = data.head.ref;
 	options.base = data.base.ref;
@@ -25470,13 +25472,7 @@ async function main$1() {
 
 	const diffSize = body.length - summary.length;
 
-	if(diffSize > 0) {
-		console.warn(`Final summary is ${diffSize} longer then a max github summary limit(1MiB)`);
-	}
-
 	core$1.setOutput('comment', body || '');
-
-  await core$1.summary.addRaw(summary).write();
 }
 
 main$1().catch(function(err) {
