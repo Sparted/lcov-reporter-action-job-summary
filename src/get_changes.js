@@ -24,6 +24,6 @@ export async function getChangedFiles(githubClient, options, context) {
 	}
 
 	return response.data.files
-		.filter(file => file.status == "modified" || file.status == "added")
+		.filter(file => file.status != "unchanged")
 		.map(file => file.filename)
 }
