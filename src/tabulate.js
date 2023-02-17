@@ -1,3 +1,4 @@
+import core from "@actions/core"
 import { th, tr, td, table, tbody, a, b, span, fragment, markdownLink } from "./html"
 import { createHref, normalisePath } from "./util"
 
@@ -47,7 +48,13 @@ function shouldBeIncluded(fileName, options) {
 	if (!options.shouldFilterChangedFiles) {
 		return true
 	}
-	return options.changedFiles.includes(fileName.replace(options.prefix, ""))
+
+	const normalisedFilename = fileName.replace(options.prefix, "")
+	const isFileChanged = options.changedFiles.includes(normalisedFilename);
+
+	core.info(`SHOULD INCLUDE FILE: ${normalisedFilename} - ${isFileChanged} - (${fileName})`)
+
+	return isFileChanged;
 }
 
 function toFolder(path) {

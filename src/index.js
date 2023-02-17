@@ -17,8 +17,7 @@ async function main() {
 	const lcovFile = path.join(workingDir, core.getInput("lcov-file") || "./coverage/lcov.info")
 	const baseFile = core.getInput("lcov-base")
 	const prNumber = core.getInput("pr-number");
-	const shouldFilterChangedFiles =
-		core.getInput("filter-changed-files").toLowerCase() === "true"
+	const shouldFilterChangedFiles = core.getInput("filter-changed-files").toLowerCase() === "true"
 	const title = core.getInput("title")
 
 	const raw = await fs.readFile(lcovFile, "utf-8").catch(err => null)
@@ -45,8 +44,6 @@ async function main() {
 		pull_number: prNumber,
 	})
 
-	core.info('Pulls data: ' + JSON.stringify(data));
-
 	options.baseCommit = data.base.sha;
 	options.commit = data.head.sha;
 	options.head = data.head.ref;
@@ -54,13 +51,13 @@ async function main() {
 	options.title = title;
 	options.shouldFilterChangedFiles = shouldFilterChangedFiles;
 
-	core.info('Options: ' + JSON.stringify(options));
+	core.info('OPTIONS:' + JSON.stringify(options) + '\n');
 
 	if (shouldFilterChangedFiles) {
 		options.changedFiles = await getChangedFiles(githubClient, options, context)
 	}
 
-	core.info('changedFiles: ' + JSON.stringify(options.changedFiles));
+	core.info('CHANGED FILES:' + JSON.stringify(options.changedFiles) + '\n');
 
 	const lcov = await parse(raw)
 	const baselcov = baseRaw && (await parse(baseRaw))
@@ -68,7 +65,7 @@ async function main() {
 
 	const summary = body.substring(0, MAX_SUMMARY_CHARS)
 
-	core.info('summary: ' + summary);
+	core.info('SUMMARY:' + summary);
 	core.setOutput('comment', body || '');
 }
 

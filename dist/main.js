@@ -25218,7 +25218,13 @@ function shouldBeIncluded(fileName, options) {
 	if (!options.shouldFilterChangedFiles) {
 		return true
 	}
-	return options.changedFiles.includes(fileName.replace(options.prefix, ""))
+
+	const normalisedFilename = fileName.replace(options.prefix, "");
+	const isFileChanged = options.changedFiles.includes(normalisedFilename);
+
+	core$1.info(`SHOULD INCLUDE FILE: ${normalisedFilename} - ${isFileChanged} - (${fileName})`);
+
+	return isFileChanged;
 }
 
 function toFolder(path) {
@@ -25423,8 +25429,7 @@ async function main$1() {
 	const lcovFile = path.join(workingDir, core$1.getInput("lcov-file") || "./coverage/lcov.info");
 	const baseFile = core$1.getInput("lcov-base");
 	const prNumber = core$1.getInput("pr-number");
-	const shouldFilterChangedFiles =
-		core$1.getInput("filter-changed-files").toLowerCase() === "true";
+	const shouldFilterChangedFiles = core$1.getInput("filter-changed-files").toLowerCase() === "true";
 	const title = core$1.getInput("title");
 
 	const raw = await fs.promises.readFile(lcovFile, "utf-8").catch(err => null);
@@ -25451,8 +25456,6 @@ async function main$1() {
 		pull_number: prNumber,
 	});
 
-	core$1.info('Pulls data: ' + JSON.stringify(data));
-
 	options.baseCommit = data.base.sha;
 	options.commit = data.head.sha;
 	options.head = data.head.ref;
@@ -25460,13 +25463,13 @@ async function main$1() {
 	options.title = title;
 	options.shouldFilterChangedFiles = shouldFilterChangedFiles;
 
-	core$1.info('Options: ' + JSON.stringify(options));
+	core$1.info('OPTIONS:' + JSON.stringify(options) + '\n');
 
 	if (shouldFilterChangedFiles) {
 		options.changedFiles = await getChangedFiles(githubClient, options, github_1);
 	}
 
-	core$1.info('changedFiles: ' + JSON.stringify(options.changedFiles));
+	core$1.info('CHANGED FILES:' + JSON.stringify(options.changedFiles) + '\n');
 
 	const lcov = await parse$2(raw);
 	const baselcov = baseRaw && (await parse$2(baseRaw));
@@ -25474,7 +25477,7 @@ async function main$1() {
 
 	const summary = body.substring(0, MAX_SUMMARY_CHARS);
 
-	core$1.info('summary: ' + summary);
+	core$1.info('SUMMARY:' + summary);
 	core$1.setOutput('comment', body || '');
 }
 
